@@ -23,11 +23,37 @@ class BaseModel:
         attributes/methods for other classes and all
         other classes will inherit from this class
     """
-    
-    def __init__(self):
-        self.id = str(uuid.uuid4())
-        self.created_at = datetime.now()
-        self.updated_at = datetime.now()
+
+    def __init__(self, *args, **kwargs):
+        """
+            Initializing the new instance of the BaseModel
+
+            Args:
+                args: Unused argument
+                kwargs: Dictionary representation of the current instance
+        """
+        if kwargs:
+            if kwargs["__class__"]:
+                del kwargs["__class__"]
+            if kwargs["created_at"]:
+                nw_ft = "%Y-%m-%dT%H:%M:%S.%f"
+                new_cr_date = datetime.strptime(
+                                                kwargs[
+                                                        "created_at"], nw_ft)
+                kwargs["created_at"] = new_cr_date
+            if kwargs["updated_at"]:
+                nw_ft = "%Y-%m-%dT%H:%M:%S.%f"
+                new_up_date = datetime.strptime(
+                                                kwargs[
+                                                        "updated_at"], nw_ft)
+                kwargs["updated_at"] = new_up_date
+
+            for key, value in kwargs.items():
+                setattr(self, key, value)
+        else:
+            self.id = str(uuid.uuid4())
+            self.created_at = datetime.now()
+            self.updated_at = datetime.now()
 
     def __str__(self):
         """
