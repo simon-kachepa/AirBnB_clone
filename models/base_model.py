@@ -10,11 +10,13 @@
                         updated_at with the current datetime
         - to_dict(self) - returns a dictionary containing all
                         keys/values of __dict__ of the instance
+    Linking BaseModel to FileStorage using the variable storage
 """
 
 
 import uuid
 from datetime import datetime
+from models import storage
 
 
 class BaseModel:
@@ -47,6 +49,7 @@ class BaseModel:
                                                 kwargs[
                                                         "updated_at"], nw_ft)
                 kwargs["updated_at"] = new_up_date
+            if kwargs and len(kwargs)>0:
 
             for key, value in kwargs.items():
                 setattr(self, key, value)
@@ -54,6 +57,7 @@ class BaseModel:
             self.id = str(uuid.uuid4())
             self.created_at = datetime.now()
             self.updated_at = datetime.now()
+            storage.new(self)
 
     def __str__(self):
         """
@@ -69,6 +73,7 @@ class BaseModel:
             with the current datetime
         """
         updated_at = datetime.now()
+        storage.save(self)
 
     def to_dict(self):
         """
