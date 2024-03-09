@@ -49,7 +49,6 @@ class BaseModel:
                                                 kwargs[
                                                         "updated_at"], nw_ft)
                 kwargs["updated_at"] = new_up_date
-            if kwargs and len(kwargs)>0:
 
             for key, value in kwargs.items():
                 setattr(self, key, value)
