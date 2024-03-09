@@ -5,6 +5,7 @@
 
 import json
 
+
 class FileStorage:
     """
         Defining FileStorage class that serializes
@@ -35,7 +36,13 @@ class FileStorage:
         """
             serializes __objects to the JSON file (path: __file_path)
         """
-        pass
+        obj_dictionary = {}
+
+        for key, value in self.all().items():
+            obj_dictionary[key] = value.to_dict()
+
+        with open(self.__file_path, "w", encoding="UTF-8") as text_file:
+            json.dump(obj_dictionary, text_file)
 
     def reload(self):
         """
@@ -44,4 +51,22 @@ class FileStorage:
             otherwise, do nothing. If the file doesn’t exist,
             no exception should be raised)
         """
-        pass
+
+        from models.base_model import BaseModel
+
+        class_map = {
+                    'BaseModel': BaseModel
+            }
+
+        try:
+            with open(self.__file_path, "r", encoding="UTF-8") as text_file:
+                obj_dictionary = json.load(text_file)
+
+                for key, val in obj_dictionary.items():
+                    class_name = val['__class__']
+                    class_instance = class_map[class_name]
+                    instance = class_instance(**val)
+                    all_objects = self.all()
+                    all_objects[key] = instance
+        except FileNotFoundError:
+            pass
