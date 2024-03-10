@@ -7,6 +7,7 @@
 
 import cmd
 
+
 class HBNBCommand(cmd.Cmd):
     """
         Defining HBNBCommand class that contains the entry point
