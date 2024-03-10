@@ -15,7 +15,7 @@ class HBNBCommand(cmd.Cmd):
     """
     prompt = "(hbnb) "
 
-     def precmd(self, line):
+    def precmd(self, line):
         """Instructions to execute before <line> is interpreted.
         """
         if not line:
