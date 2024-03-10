@@ -57,7 +57,7 @@ class FileStorage:
 
         class_map = {
                     'BaseModel': BaseModel,
-                    'User' : User
+                    'User': User
             }
 
         try:
