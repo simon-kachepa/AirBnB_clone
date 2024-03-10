@@ -56,7 +56,7 @@ class FileStorage:
         from models.user import User
 
         class_map = {
-                    'BaseModel': BaseModel
+                    'BaseModel': BaseModel,
                     'User' : User
             }
 
