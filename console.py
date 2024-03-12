@@ -12,6 +12,7 @@ from models import storage
 from models.base_model import BaseModel
 from models.user import User
 
+
 def parse(arg):
     curly_braces = re.search(r"\{(.*?)\}", arg)
     brackets = re.search(r"\[(.*?)\]", arg)
@@ -28,6 +29,7 @@ def parse(arg):
         retl = [i.strip(",") for i in lexer]
         retl.append(curly_braces.group())
         return retl
+
 
 class HBNBCommand(cmd.Cmd):
     """
